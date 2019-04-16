@@ -1,0 +1,124 @@
+## Container commands
+
+# Create container
+
+docker images
+docker container create --name test-busybox --interactive --tty busybox
+docker ps
+docker ps --all
+docker container create --name test-ubuntu -i -t ubuntu
+
+
+# Start Container
+
+docker ps --all
+docker container start test-ubuntu
+
+
+# Stop Container
+
+docker ps --all
+docker container stop test-ubuntu
+
+
+# Restart container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container restart tender_nobel
+docker container restart b4625414f9ee
+
+
+# Attach to a Container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"
+docker run -i -t --name hidden-ubuntu ubuntu:16.04
+docker attach hidden-ubuntu
+
+
+# Execute command on a container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"
+docker start hidden-ubuntu
+docker exec -i -t hidden-ubuntu bash
+
+
+# View container logs
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container logs tender_nobel
+docker container logs --tail=10 tender_nobel
+
+
+# Prune unused containers
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container prune
+
+
+# Remove containers
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container rm hopeful_wescoff
+docker container rm hopeful_wescoff --force
+docker stop gracious_kare
+docker container rm gracious_kare
+docker container rm 3a42ec1e6479 7e6a73f8614e --force
+docker rm --force `docker ps -a -q`
+
+
+# Kill a container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container kill romantic_tesla
+docker container kill sharp_brown
+
+
+# Rename a container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container rename dreamy_raman my-httpd 
+
+
+# View running processes in a container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container top my-httpd
+docker container top romantic_tesla
+
+
+# Use of container diff
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker container diff hopeful_brown
+docker exec -it hopeful_brown bash
+docker container diff hopeful_brown
+
+
+# Port mapping for a container
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker run -i -t -d --name httpd_1 -p 80:80 httpd
+docker run -i -t -d --name httpd_2 httpd
+docker container port httpd_1
+docker container port httpd_2
+
+
+# docker ps commands with options and formats
+
+docker ps -a
+docker ps -a -q
+docker ps -a --filter ancestor=busybox
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Size}}"
+
+
+# docker inspect command with options
+
+docker ps --all --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+docker inspect f194e090f505
+docker inspect --format = '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+f194e090f505 7e6a73f8614e
+docker inspect --format = '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+f194e090f505 3a42ec1e6479
+
+

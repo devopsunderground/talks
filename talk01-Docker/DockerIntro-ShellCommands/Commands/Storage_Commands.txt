@@ -1,0 +1,92 @@
+## Docker Storage
+
+# Create volume
+
+docker volume ls
+docker volume create --name test-volume
+
+
+# Attach volume to container
+
+docker run -d --name test-busybox -v vol-busybox:/app busybox
+docker volume ls
+docker inspect test-busybox
+docker run -d --name test-busybox-1 --mount source=vol-busybox-1,target=/app
+busybox
+docker volume ls
+docker inspect test-busybox-1
+
+
+# Attach readonly volume to container
+
+docker volume ls
+docker run -d --name test-busybox -v vol-busybox:/app:ro busybox
+docker inspect test-busybox
+docker run -d --name test-busybox-1 --mount
+source=vol-busybox-1,target=/app,readonly busybox
+docker volume ls
+
+
+# Prune unused volumes
+
+docker volume prune
+
+
+# Remove volume
+
+docker ps --all --format “table {{.Id}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}”
+docker container stop suspicious_turing
+docker container rm suspicious_turing
+docker volume rm vol-busybox
+
+
+# Attach a bind mount to container
+
+docker volume ls
+docker run -d -it --name test-busybox --mount type=bind,source=/tmp,target=/app nginx
+docker ps
+docker inspect test-busybox
+docker stop test-busybox
+docker rm test-busybox
+
+
+# Attach a readonly bind mount to container
+
+docker volume ls
+docker run -d -it --name test-busybox \
+--mount type=bind,source=/tmp,target=/app,readonly nginx
+docker inspect test-busybox
+docker stop test-busybox
+docker rm test-busybox
+
+
+# Mount mulitple bind mounts to container
+
+docker volume ls
+docker run -d -it --name test-busybox \
+--mount type=bind,source=/tmp,target=/app \
+--mount type=bind,source=/tmp,target/app1,readonly,bind-propagation=rslave \
+busybox
+docker ps -a
+docker stop test-busybox
+docker rm test-busybox
+
+
+# Use a tmpfs mount in container
+
+docker volume ls
+docker run -d -it --name test-busybox --mount type=tmpfs,target=/app busybox
+docker ps -a
+docker inspect test-busybox
+docker run -d -it --name test-busybox-1 tmpfs /app busybox
+docker inspect test-busybox-1
+docker stop test-busybox
+docker inspect test-busybox
+docker rm test-busybox
+docker stop test-busybox-1
+docker inspect test-busybox-1
+docker rm test-busybox-1
+
+
+
+

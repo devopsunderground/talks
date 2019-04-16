@@ -1,0 +1,74 @@
+
+# Search Docker images
+
+docker search httpd
+docker search --filter is-automated=true httpd
+docker search --filter is-official=true --filter starts=3 httpd
+docker search --format “table {{.Name}}\t{{.StarCount}}” httpd
+
+
+# Prune images
+
+docker images
+docker images prune
+docker images prune --all
+
+
+# Remove images
+
+docker images
+docker image rm busybox
+docker rmi redis
+docker image rm busybox redis
+
+# Tag an image
+
+docker images
+docker image tag busybox:latest my-busybox:latest
+docker image tag busybox:latest my-busybox:v1
+docker images
+
+
+# Save container state and push image
+
+docker images
+docker ps -a
+docker run -it -d --name test-busybox busybox
+docker container commit 5d1b789cdf86 test-busybox
+docker tag test-busybox dloonycorn/test-busybox
+docker login
+docker push dloonycorn/test-busybox
+
+
+# Pull images
+
+docker image pull busybox
+docker image pull ubuntu:16.04
+docker image pull --disable-content-trust nginx
+
+
+# Save image in tar file
+
+docker images
+docker save busybox > busybox.tar
+docker images
+
+
+# Load image from tar file
+
+docker images
+docker load < busybox.tar
+docker --input busybox.tar
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+## Containers - NGINX app
+
+mkdir test-nginx \ cd test-nginx
+vim index.html
+
+#### HTML File
+<html>
+<head>
+<style>
+h1 {color:black;text-align:left;font-family:helvetica;font-size:36}
+p {color:tomato;text-align:left;font-family:helvetica;font-size:18}
+</style>
+</head>
+<body>
+<h1> welcome to nginx service! </h1>
+<p> this is a custom nginx service. </p>
+</body>
+</html>
+####
+
+
+vim dockerfile
+
+#### Dockerfile
+FROM nginx:alpine
+LABEL maintainer devops underground
+VOLUME [“/vol-nginx”]
+COPY index.html /usr/share/nginx/html
+EXPOSE 80
+#### 
+
+
+docker build --no-cache -f dockerfile -t my-nginx .
+docker images
+docker run -it -d --name nginx -p 8080:80 my-nginx
+docker ps -a \ 192.168.99.100:8080

@@ -1,0 +1,49 @@
+## Docker networks
+
+# Create bridge network
+
+docker network ls
+docker network create -d=bridge my-new-bridge
+docker network create \
+--driver=bridge \
+--subnet=172.28.0.0/16 \
+--ip-range=172.28.5.0/24 \
+--gateway=172.28.5.254 \
+test-bridge
+docker network ls
+
+
+# Connect container to network
+
+docker network connect my-new-bridge mybusybox
+docker inspect mybusybox
+docker run -it -d --name mynginx --network=my-new-bridge nginx
+docker inspect mynginx
+
+
+# Disconnect container from network
+
+docker network ls
+docker ps
+docker inspect mybusybox
+docker network disconnect my-new-bridge mybusybox
+
+
+# Create overlay network
+
+docker network create --driver=overlay my-overlay-network
+
+
+# Remove network
+
+docker network ls
+docker network rm my-new-bridge
+docker ps
+
+
+# Remove unused networks
+
+docker network ls
+docker network prune
+
+

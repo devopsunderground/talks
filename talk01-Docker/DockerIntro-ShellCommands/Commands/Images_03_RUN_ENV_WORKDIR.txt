@@ -1,0 +1,21 @@
+## Dockerfile_03_RUN_ENV_WORKDIR
+
+vim test-2
+
+#### Dockerfile
+ARG CODE_VERSION=17.10
+FROM ubuntu:${CODE_VERSION}
+LABEL maintainer=dhwani
+RUN apt-get update && \
+apt-get install -y curl && \
+rm -rf /var/lib/apt/lists/*
+ENV HOME /root
+WORKDIR /root
+CMD [“bash”]
+####
+
+
+docker build --no-cache -f test-2 -t my-ubuntu-2 .
+docker images
+docker run -it -d --name test-ubuntu my-ubuntu-2
+docker ps -a

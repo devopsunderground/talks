@@ -1,0 +1,6 @@
+# Basic Dockerfile
+
+FROM ubuntu
+
+LABEL maintainer=devopsunderground
+CMD [“bash”]

@@ -1,0 +1,20 @@
+mkdir ubuntu
+cd ubuntu
+vim dockerfile
+
+#### Dockerfile
+FROM ubuntu
+LABEL maintainer dhwani
+ADD https://drive.google.com/file/d/1YDqwHc7eZ4lpRS5PeyqvHBCtDsWy10d1/view?usp=sharing /tmp/hello.txt
+CMD ["bash"]
+####
+
+
+docker build -f dockerfile -t my-ubuntu .
+docker images
+docker run -it -d --name ubuntu my-ubuntu
+docker ps -a
+docker attach ubuntu
+ls
+cd tmp
+exit

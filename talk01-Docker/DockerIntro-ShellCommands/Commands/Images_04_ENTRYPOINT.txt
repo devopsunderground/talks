@@ -1,0 +1,17 @@
+## ENTRYPOINT Instruction
+
+mkdir test-files
+cd test-files
+touch test-4
+vim test-4
+
+#### Dockerfile
+FROM ubuntu:trusty
+ENTRYPOINT [“/bin/ping”, “-c”, “3”]
+CMD {“192.168.99.100”]
+####
+
+docker build -t test-4 -t test-image .
+docker images
+docker run -it --name test-container test-image
+docker ps -a
